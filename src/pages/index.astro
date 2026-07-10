@@ -1,0 +1,584 @@
+---
+import Base from '../layouts/Base.astro'
+
+const work = [
+  {
+    n: 'I',
+    org: 'Nugget AI',
+    role: 'Founder',
+    years: '2024 — now',
+    stat: '0 → 1',
+    statLabel: 'my own forge',
+    href: 'https://nggt.ai/',
+    blurb:
+      'The Cursor for product managers. Nugget takes raw customer interviews and returns a prioritized roadmap in seconds — the exact grind I did by hand for a decade, forged into software.',
+  },
+  {
+    n: 'II',
+    org: 'FIXD Automotive',
+    role: 'Product Manager',
+    years: '2022 — 2024',
+    stat: '$1M ARR',
+    statLabel: 'in 12 months, 5× exit',
+    href: 'https://fixdapp.com/',
+    blurb:
+      'Built a B2B product for 450 franchise dealerships to $1M ARR inside a year — acquired at 5× ARR. Shipped an AI repair assistant that lifted weekly retention 10%, and cut $50K/mo in vendor costs.',
+  },
+  {
+    n: 'III',
+    org: 'LinkedIn',
+    role: 'Technical Program Manager',
+    years: '2017 — 2021',
+    stat: '900M/day',
+    statLabel: 'notifications delivered',
+    href: 'https://linkedin.com/',
+    blurb:
+      'Led the cross-functional team behind “Open to Work” — a feature used by millions that lifted job applications 3% — and Project Honeycomb, the system pushing 900M+ notifications a day.',
+  },
+]
+
+const method = [
+  {
+    n: '01',
+    title: 'Gather the ore',
+    body: 'Every roadmap starts as rubble — customer interviews, funnel data, support tickets, founder hunches. I collect it all before deciding anything. The ore is never the problem; ignoring it is.',
+  },
+  {
+    n: '02',
+    title: 'Apply heat',
+    body: 'Prioritize ruthlessly, prototype fast, and let real users burn away everything that doesn’t matter. Most ideas don’t survive the furnace. That’s the point of the furnace.',
+  },
+  {
+    n: '03',
+    title: 'Ship the steel',
+    body: 'Launch, measure, and scale what holds. A feature isn’t finished when it ships — it’s finished when the retention curve says so.',
+  },
+]
+
+const socials = [
+  { label: 'GitHub', href: 'https://github.com/HunterHelms' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/brodiehelms/' },
+  { label: 'Substack', href: 'https://pmbrodie.substack.com/' },
+  { label: 'Medium', href: 'https://medium.com/@brodiehelms' },
+  { label: 'Instagram', href: 'https://www.instagram.com/brodiehelms/' },
+]
+---
+
+<Base
+  title="Brodie Helms — Product Manager & Founder"
+  description="Hunter Brodie Helms forges raw user signal into shipped product. LinkedIn, FIXD Automotive, and Nugget AI. Birmingham, Alabama."
+>
+  <canvas id="forge-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-nav">
+    <a class="wordmark" href="/">
+      <span class="spark" aria-hidden="true"></span>
+      Brodie Helms
+    </a>
+    <nav aria-label="Site">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="/guide">Guide</a>
+      <a class="nav-cta" href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ————— HERO / state 0: ORE ————— -->
+    <section class="hero" id="hero">
+      <div class="wrap">
+        <p class="mono-label" data-hero-eyebrow>
+          Hunter Brodie Helms · Product Manager · Birmingham, AL
+        </p>
+        <h1 class="hero-title">
+          <span class="line" data-hero-line><span class="display">Raw signal,</span></span>
+          <span class="line" data-hero-line
+            ><span class="display-italic heat-text">forged</span></span
+          >
+          <span class="line" data-hero-line><span class="display">into product.</span></span>
+        </h1>
+        <p class="hero-body" data-hero-body>
+          I’m Brodie — a product manager and founder from Birmingham, the old iron city.
+          For a decade I’ve done one thing: take the noise of real users and hammer it
+          into products people pay for. LinkedIn. FIXD. Now my own forge, Nugget AI.
+        </p>
+      </div>
+      <p class="scroll-cue mono-label" data-hero-cue>
+        Scroll — the sparks follow <span class="cue-bar" aria-hidden="true"></span>
+      </p>
+    </section>
+
+    <!-- ————— METHOD / state 1: STREAM ————— -->
+    <section class="method" id="method">
+      <div class="wrap">
+        <p class="mono-label" data-reveal>The method</p>
+        <h2 class="section-title display" data-reveal>Ore, heat, steel.</h2>
+        <div class="method-grid" data-reveal-group>
+          {
+            method.map((m) => (
+              <article class="method-step" data-reveal-item>
+                <p class="step-n mono-label">{m.n}</p>
+                <h3>{m.title}</h3>
+                <p class="step-body">{m.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ————— WORK / state 2: INGOT ————— -->
+    <section class="work" id="work">
+      <div class="wrap">
+        <p class="mono-label" data-reveal>Selected work · 2017 — now</p>
+        <h2 class="section-title display" data-reveal>What the furnace made.</h2>
+        <div class="work-list" data-reveal-group>
+          {
+            work.map((w) => (
+              <a class="work-row" href={w.href} target="_blank" rel="noreferrer" data-reveal-item>
+                <span class="row-n mono-label">{w.n}</span>
+                <span class="row-main">
+                  <span class="row-org display">{w.org}</span>
+                  <span class="row-role mono-label">
+                    {w.role} · {w.years}
+                  </span>
+                  <span class="row-blurb">{w.blurb}</span>
+                </span>
+                <span class="row-stat">
+                  <span class="stat-value display-italic heat-text">{w.stat}</span>
+                  <span class="stat-label mono-label">{w.statLabel}</span>
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ————— ABOUT ————— -->
+    <section class="about" id="about">
+      <div class="wrap about-grid">
+        <div>
+          <p class="mono-label" data-reveal>Off the clock</p>
+          <h2 class="section-title display" data-reveal>Birmingham, made.</h2>
+        </div>
+        <div class="about-body" data-reveal>
+          <p>
+            Born where they poured iron — Birmingham, Alabama, under Vulcan’s torch.
+            I still live here, and it shows: I like work you can point at.
+          </p>
+          <p>
+            Saturdays are for Alabama football (<em>Roll Tide</em>), a golf handicap
+            that’s trending the right way, and being outside. Lately I’m learning to
+            code — the last version of this site, I built by hand.
+          </p>
+          <p class="about-aside">
+            This version, I commissioned differently. <a href="/guide">Ask the machine →</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ————— CONTACT / state 3: EMBER ————— -->
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <p class="mono-label" data-reveal>The forge is open</p>
+        <h2 class="contact-title" data-reveal>
+          <span class="display">Let’s</span>
+          <span class="display-italic heat-text">build.</span>
+        </h2>
+        <div class="contact-actions" data-reveal>
+          <a class="btn-forge" href="mailto:bhelms@redmontdigital.com">Email me</a>
+          <a class="btn-quiet" href="https://calendar.app.google/1RgGcSPRMjPVzF4Y9" target="_blank" rel="noreferrer"
+            >Book 30 minutes</a
+          >
+        </div>
+        <ul class="social-row" data-reveal>
+          {
+            socials.map((s) => (
+              <li>
+                <a href={s.href} target="_blank" rel="noreferrer">
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <p>© 2026 Hunter Brodie Helms</p>
+        <p>
+          Designed &amp; built by <strong>Claude Fable 5</strong> — every pixel is code.
+          <a href="/guide">Read how →</a>
+        </p>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    import '../scripts/site.js'
+  </script>
+</Base>
+
+<style>
+  /* ————— nav ————— */
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem var(--gutter);
+    background: linear-gradient(to bottom, rgba(23, 20, 26, 0.85), transparent);
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    color: var(--bone);
+  }
+  .spark {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, var(--whitehot), var(--ember));
+    box-shadow: 0 0 12px rgba(255, 92, 46, 0.8);
+  }
+  .site-nav nav {
+    display: flex;
+    gap: 1.8rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .site-nav nav a {
+    color: var(--ash);
+  }
+  .site-nav nav a:hover {
+    color: var(--whitehot);
+  }
+  .nav-cta {
+    color: var(--amber) !important;
+  }
+
+  /* ————— hero ————— */
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding-top: 4rem;
+  }
+  .hero-title {
+    margin-top: 1.4rem;
+    font-size: var(--text-hero);
+    line-height: 0.98;
+  }
+  .hero-title .line {
+    display: block;
+    overflow: hidden;
+    line-height: 1.06;
+    padding-bottom: 0.14em; /* room for italic descenders inside the reveal mask */
+    margin-bottom: -0.14em;
+  }
+  .hero-title .line > span {
+    display: inline-block;
+  }
+  .hero-body {
+    max-width: 34rem;
+    margin-top: 2.2rem;
+    font-size: var(--text-md);
+    font-weight: 340;
+    line-height: 1.55;
+    color: var(--ash);
+  }
+  .scroll-cue {
+    position: absolute;
+    bottom: 2rem;
+    left: var(--gutter);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .cue-bar {
+    display: inline-block;
+    width: 3.5rem;
+    height: 1px;
+    background: linear-gradient(to right, var(--ember), transparent);
+    animation: cue-pulse 2.4s var(--ease-forge) infinite;
+  }
+  @keyframes cue-pulse {
+    0%, 100% { transform: scaleX(0.4); transform-origin: left; opacity: 0.5; }
+    50% { transform: scaleX(1); opacity: 1; }
+  }
+
+  /* ————— shared section furniture ————— */
+  section {
+    padding-block: clamp(6rem, 14vh, 10rem);
+  }
+  .section-title {
+    font-size: clamp(2.2rem, 5.5vw, 4rem);
+    margin-top: 0.9rem;
+    margin-bottom: 3rem;
+  }
+
+  /* ————— method ————— */
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+  .method-step {
+    border-top: 1px solid var(--slag-edge);
+    padding-top: 1.4rem;
+  }
+  .step-n {
+    color: var(--ember);
+  }
+  .method-step h3 {
+    font-family: var(--font-display);
+    font-variation-settings: 'opsz' 40, 'SOFT' 50, 'WONK' 0;
+    font-weight: 560;
+    font-size: var(--text-lg);
+    margin: 0.7rem 0 0.8rem;
+  }
+  .step-body {
+    color: var(--ash);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  /* ————— work ————— */
+  .work-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .work-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.5rem 1fr minmax(11rem, auto);
+    gap: 1.5rem;
+    align-items: start;
+    padding: 2.4rem 1.2rem;
+    margin-inline: -1.2rem;
+    border-top: 1px solid var(--slag-edge);
+    color: inherit;
+  }
+  /* heat wash rises through the row on hover */
+  .work-row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(255, 92, 46, 0.09), rgba(255, 180, 84, 0.03) 55%, transparent);
+    opacity: 0;
+    transition: opacity var(--dur-std) var(--ease-forge);
+    pointer-events: none;
+  }
+  .work-row:hover::before,
+  .work-row:focus-visible::before {
+    opacity: 1;
+  }
+  .work-row::after {
+    content: '↗';
+    position: absolute;
+    top: 2.3rem;
+    right: 1.2rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--amber);
+    opacity: 0;
+    transform: translate(-6px, 6px);
+    transition:
+      opacity var(--dur-quick) var(--ease-forge),
+      transform var(--dur-std) var(--ease-out-soft);
+  }
+  .work-row:hover::after {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  .work-row:last-child {
+    border-bottom: 1px solid var(--slag-edge);
+  }
+  .row-n {
+    padding-top: 0.5rem;
+    color: var(--ash);
+  }
+  .row-org {
+    font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+    transition: color var(--dur-quick) var(--ease-forge);
+  }
+  .work-row:hover .row-org {
+    color: var(--amber);
+  }
+  .row-role {
+    display: block;
+    margin-top: 0.4rem;
+  }
+  .row-blurb {
+    display: block;
+    max-width: 36rem;
+    margin-top: 0.9rem;
+    color: var(--ash);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+  .row-stat {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding-top: 0.4rem;
+  }
+  .stat-value {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+  }
+
+  /* ————— about ————— */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+  }
+  .about-body p {
+    margin-bottom: 1.3rem;
+    font-size: var(--text-md);
+    font-weight: 340;
+    line-height: 1.65;
+    color: var(--bone);
+  }
+  .about-body .about-aside {
+    color: var(--ash);
+    font-size: var(--text-base);
+  }
+
+  /* ————— contact ————— */
+  .contact {
+    text-align: center;
+    padding-block: clamp(8rem, 20vh, 14rem);
+  }
+  .contact-title {
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.35em;
+    flex-wrap: wrap;
+    margin: 1.2rem 0 2.8rem;
+  }
+  .contact-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn-forge,
+  .btn-quiet {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.95rem 1.9rem;
+    border-radius: 999px;
+    transition:
+      transform var(--dur-quick) var(--ease-out-soft),
+      box-shadow var(--dur-std) var(--ease-forge);
+  }
+  .btn-forge {
+    background: linear-gradient(110deg, var(--ember), var(--amber));
+    color: var(--iron-deep);
+    font-weight: 600;
+    box-shadow: 0 0 28px rgba(255, 92, 46, 0.35);
+  }
+  .btn-forge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 46px rgba(255, 92, 46, 0.55);
+    color: var(--iron-deep);
+  }
+  .btn-quiet {
+    border: 1px solid var(--slag-edge);
+    color: var(--bone);
+  }
+  .btn-quiet:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+  .social-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-top: 3.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .social-row a {
+    color: var(--ash);
+  }
+  .social-row a:hover {
+    color: var(--whitehot);
+  }
+
+  /* ————— footer ————— */
+  .site-footer {
+    border-top: 1px solid var(--slag-edge);
+    padding-block: 2rem;
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+    color: var(--ash);
+  }
+  .footer-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .site-footer strong {
+    color: var(--bone);
+    font-weight: 500;
+  }
+
+  /* ————— responsive ————— */
+  @media (max-width: 860px) {
+    .method-grid {
+      grid-template-columns: 1fr;
+      gap: 2.2rem;
+    }
+    .work-row {
+      grid-template-columns: 2.2rem 1fr;
+    }
+    .row-stat {
+      grid-column: 2;
+      text-align: left;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 0.8rem;
+    }
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+    .site-nav nav {
+      gap: 1.1rem;
+    }
+    .site-nav nav a:not(.nav-cta):not([href='/guide']) {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,290 @@
+---
+import Base from '../layouts/Base.astro'
+
+const steps = [
+  {
+    n: '01',
+    title: 'One prompt, total freedom',
+    body: 'The entire brief was a single message: build a personal site that demonstrates what Claude Fable 5 can do — advanced visuals, otherworldly animation, an exceptional palette, novel type — then push it to GitHub, make sure Netlify ships it, and document the process here. No mockups, no design review, no follow-up instructions. Everything below was decided and executed autonomously.',
+  },
+  {
+    n: '02',
+    title: 'Ground the design in the subject',
+    body: 'Generic “AI portfolio” aesthetics were rejected first. Brodie is a product manager from Birmingham, Alabama — the old iron city, home of Sloss Furnaces and Vulcan — and his craft is turning raw user signal into shipped product. That gave the site its thesis (“raw signal, forged into product”), its palette (furnace heat on warm iron), and its signature element: a forge that runs behind the entire page.',
+  },
+  {
+    n: '03',
+    title: 'Build the forge',
+    body: 'The background is a single WebGL particle system — tens of thousands of points in one buffer, written in raw GLSL on Three.js. Each particle carries four morph targets: a chaotic ore cloud (hero), a converging vortex (method), a white-hot lattice ingot (work), and a ring of rising embers (contact). A scroll-driven uniform blends between them with per-particle stagger, curl-noise turbulence, and a temperature ramp from ash to ember to white-hot. No textures, no images, no video — every visual on this site is math.',
+  },
+  {
+    n: '04',
+    title: 'Choose type with a point of view',
+    body: 'Display: Fraunces, a variable serif with SOFT and WONK axes cranked so the letterforms read slightly molten. Body: Archivo, an industrial grotesque. Labels: Spline Sans Mono. All three are self-hosted variable fonts via Fontsource — zero third-party requests, full axis control in CSS.',
+  },
+  {
+    n: '05',
+    title: 'Choreograph, don’t decorate',
+    body: 'Motion follows one personality — premium, fluid, molten: a 400–900ms duration palette, one signature easing curve, entrances that decelerate, and GSAP ScrollTrigger scrubbing the forge through its states as Lenis smooths the scroll. Users who prefer reduced motion get a static forge, instant reveals, and native scrolling.',
+  },
+  {
+    n: '06',
+    title: 'Iterate like an editor',
+    body: 'After the first complete build, the site went through three full iteration passes — loading it in a real browser, screenshotting desktop and mobile, and hunting for weak spacing, dead contrast, timing that felt off, and places where the design could go further. Each pass ended in code changes. The version you’re reading survived all three.',
+  },
+  {
+    n: '07',
+    title: 'Ship it',
+    body: 'Astro renders everything to static HTML — the WebGL and GSAP hydrate on top. A netlify.toml pins the build command, publish directory, and Node version so Netlify builds identically to local, with immutable cache headers on hashed assets. Then: git init, push to GitHub, connect the repo, done.',
+  },
+]
+
+const stack = [
+  ['Framework', 'Astro 5 (static output)'],
+  ['3D / particles', 'Three.js + custom GLSL'],
+  ['Animation', 'GSAP ScrollTrigger + Lenis'],
+  ['Type', 'Fraunces · Archivo · Spline Sans Mono (Fontsource, self-hosted)'],
+  ['Assets', 'None. Every visual is procedural.'],
+  ['Hosting', 'Netlify, static deploy from GitHub'],
+  ['Designer & engineer', 'Claude Fable 5, autonomously'],
+]
+---
+
+<Base
+  title="Guide — how this site was forged"
+  description="How Claude Fable 5 designed and built brodieh.com autonomously: concept, WebGL particle forge, typography, motion system, iteration passes, and Netlify deploy."
+>
+  <canvas id="forge-canvas" class="guide-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-nav">
+    <a class="wordmark" href="/">
+      <span class="spark" aria-hidden="true"></span>
+      Brodie Helms
+    </a>
+    <nav aria-label="Site">
+      <a href="/#work">Work</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="guide">
+    <div class="wrap">
+      <section class="guide-hero">
+        <p class="mono-label">The guide · written by the machine that built this</p>
+        <h1>
+          <span class="display">How this site</span>
+          <span class="display-italic heat-text">was forged.</span>
+        </h1>
+        <p class="guide-lede">
+          Everything you’re looking at — the concept, the palette, the type, the particle
+          system, the copy, this sentence — was designed and written by
+          <strong>Claude Fable 5</strong>, Anthropic’s frontier model, from one prompt.
+          Here’s the process, so you can commission your own.
+        </p>
+      </section>
+
+      <section class="guide-steps" aria-label="Process">
+        {
+          steps.map((s) => (
+            <article class="guide-step">
+              <p class="step-n mono-label">{s.n}</p>
+              <div>
+                <h2>{s.title}</h2>
+                <p>{s.body}</p>
+              </div>
+            </article>
+          ))
+        }
+      </section>
+
+      <section class="guide-stack" aria-label="Stack">
+        <p class="mono-label">The full stack</p>
+        <dl>
+          {
+            stack.map(([k, v]) => (
+              <div class="stack-row">
+                <dt class="mono-label">{k}</dt>
+                <dd>{v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <section class="guide-cta">
+        <p class="guide-lede">
+          Want one? Open <a href="https://claude.com/claude-code" rel="noreferrer" target="_blank">Claude Code</a>,
+          describe who you are and what you want the world to feel when they land on your
+          name, and ask for iteration passes before it calls the work done. Taste isn’t in
+          the tools. It’s in the brief — and in refusing the first draft.
+        </p>
+        <a class="btn-quiet back-link" href="/">← Back to the site</a>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    import { initForge } from '../scripts/forge.js'
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const canvas = document.getElementById('forge-canvas')
+    if (canvas) {
+      const forge = initForge(canvas, { reducedMotion: reduced })
+      if (forge) forge.setProgress(3) // quiet embers behind the reading
+    }
+  </script>
+</Base>
+
+<style>
+  .guide-canvas {
+    opacity: 0.4;
+  }
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem var(--gutter);
+    background: linear-gradient(to bottom, rgba(23, 20, 26, 0.9), transparent);
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    color: var(--bone);
+  }
+  .spark {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, var(--whitehot), var(--ember));
+    box-shadow: 0 0 12px rgba(255, 92, 46, 0.8);
+  }
+  .site-nav nav {
+    display: flex;
+    gap: 1.8rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .site-nav nav a {
+    color: var(--ash);
+  }
+  .site-nav nav a:hover {
+    color: var(--whitehot);
+  }
+
+  .guide {
+    padding-top: clamp(8rem, 18vh, 12rem);
+    padding-bottom: 6rem;
+  }
+  .guide-hero h1 {
+    font-size: clamp(2.6rem, 7vw, 5.5rem);
+    line-height: 1.02;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .guide-lede {
+    max-width: 42rem;
+    margin-top: 2rem;
+    font-size: var(--text-md);
+    font-weight: 340;
+    line-height: 1.6;
+    color: var(--ash);
+  }
+  .guide-lede strong {
+    color: var(--bone);
+    font-weight: 550;
+  }
+
+  .guide-steps {
+    margin-top: 6rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .guide-step {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: 1.5rem;
+    padding: 2.6rem 0;
+    border-top: 1px solid var(--slag-edge);
+  }
+  .step-n {
+    color: var(--ember);
+    padding-top: 0.4rem;
+  }
+  .guide-step h2 {
+    font-family: var(--font-display);
+    font-variation-settings: 'opsz' 60, 'SOFT' 50, 'WONK' 0;
+    font-weight: 580;
+    font-size: var(--text-xl);
+    margin-bottom: 0.9rem;
+  }
+  .guide-step p {
+    max-width: 46rem;
+    color: var(--ash);
+    line-height: 1.75;
+  }
+
+  .guide-stack {
+    margin-top: 5rem;
+  }
+  .guide-stack dl {
+    margin-top: 1.4rem;
+    border-top: 1px solid var(--slag-edge);
+  }
+  .stack-row {
+    display: grid;
+    grid-template-columns: minmax(9rem, 14rem) 1fr;
+    gap: 1.5rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid var(--slag-edge);
+  }
+  .stack-row dd {
+    color: var(--bone);
+    font-size: var(--text-sm);
+  }
+  .stack-row dt {
+    padding-top: 0.15rem;
+  }
+
+  .guide-cta {
+    margin-top: 6rem;
+  }
+  .back-link {
+    display: inline-block;
+    margin-top: 2.4rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.95rem 1.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--slag-edge);
+    color: var(--bone);
+    transition: border-color var(--dur-quick) var(--ease-forge), color var(--dur-quick) var(--ease-forge);
+  }
+  .back-link:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  @media (max-width: 640px) {
+    .guide-step {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+    .stack-row {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>
