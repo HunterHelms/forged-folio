@@ -1,0 +1,350 @@
+---
+import Base from '../layouts/Base.astro'
+
+const projects = [
+  {
+    name: 'Nugget AI',
+    kind: 'Web app · SaaS',
+    href: 'https://nggt.ai/',
+    cover: { type: 'shot', src: '/projects/nugget-cover.jpg', alt: 'Nugget AI landing page — “From Customer Interview to Product Roadmap in Seconds.”' },
+    blurb:
+      'From customer interview to product roadmap in seconds. Nugget transcribes interviews in real time, extracts the friction points, and ships the insights straight into your workflow.',
+  },
+  {
+    name: '20 Problems',
+    kind: 'Web app · Daily game',
+    href: 'https://www.20problems.com/',
+    cover: { type: 'shot', src: '/projects/twenty-cover.jpg', alt: '20 Problems — “Can you build every formula before the clock runs out?”' },
+    blurb:
+      'A daily math sprint. Twenty formulas to build, thirty seconds each, one leaderboard — and a fresh set every day.',
+  },
+  {
+    name: 'Halo — Selfie Ring Light',
+    kind: 'iOS app · App Store',
+    href: 'https://apps.apple.com/us/app/halo-selfie-ring-light/id6758818168',
+    cover: { type: 'icon', src: '/projects/halo-icon.jpg', alt: 'Halo app icon' },
+    blurb:
+      'Your screen becomes the ring light. Real-time glow effects and smart lighting tools that make front-camera shots look studio-lit — no hardware required.',
+  },
+  {
+    name: 'Part Identifier Plus',
+    kind: 'iOS app · App Store',
+    href: 'https://apps.apple.com/us/app/part-identifier-plus/id6741009187',
+    cover: { type: 'icon', src: '/projects/partid-icon.jpg', alt: 'Part Identifier Plus app icon' },
+    blurb:
+      'Point, shoot, identified. AI names any part from a single photo — for weekend tinkerers and seasoned mechanics alike.',
+  },
+]
+---
+
+<Base
+  title="Projects — Brodie Helms"
+  description="Things Brodie Helms has shipped: Nugget AI, 20 Problems, Halo, and Part Identifier Plus."
+>
+  <canvas id="forge-canvas" class="projects-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-nav">
+    <a class="wordmark" href="/">
+      <span class="spark" aria-hidden="true"></span>
+      Brodie Helms
+    </a>
+    <nav aria-label="Site">
+      <a href="/#work">Work</a>
+      <a class="nav-cta" href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="projects">
+    <div class="wrap">
+      <section class="projects-hero">
+        <p class="mono-label">The workshop · live &amp; shipped</p>
+        <h1>
+          <span class="display">Things I’ve</span>
+          <span class="display-italic heat-text">forged.</span>
+        </h1>
+        <p class="projects-lede">
+          Side fires and main furnaces — every one of these is live, in stores or in browsers,
+          with real users. Tap through and try them.
+        </p>
+      </section>
+
+      <section class="project-grid" data-reveal-group aria-label="Projects">
+        {
+          projects.map((p) => (
+            <a class="project-card" href={p.href} target="_blank" rel="noreferrer" data-reveal-item>
+              <span class={`card-cover ${p.cover.type === 'icon' ? 'cover-icon' : 'cover-shot'}`}>
+                {p.cover.type === 'icon' ? (
+                  <img src={p.cover.src} alt={p.cover.alt} width="512" height="512" loading="lazy" class="icon-img" />
+                ) : (
+                  <img src={p.cover.src} alt={p.cover.alt} width="1200" height="750" loading="lazy" class="shot-img" />
+                )}
+              </span>
+              <span class="card-meta mono-label">{p.kind}</span>
+              <span class="card-title">
+                <span class="card-name">{p.name}</span>
+                <span class="card-arrow" aria-hidden="true">↗</span>
+              </span>
+              <span class="card-blurb">{p.blurb}</span>
+            </a>
+          ))
+        }
+      </section>
+
+      <section class="projects-cta">
+        <a class="back-link" href="/">← Back to the site</a>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    import gsap from 'gsap'
+    import { ScrollTrigger } from 'gsap/ScrollTrigger'
+    import { initForge } from '../scripts/forge.js'
+
+    gsap.registerPlugin(ScrollTrigger)
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const canvas = document.getElementById('forge-canvas')
+    if (canvas) {
+      const forge = initForge(canvas, { reducedMotion: reduced })
+      if (forge) forge.setProgress(3) // quiet embers behind the work
+    }
+
+    if (!reduced) {
+      gsap.from('.projects-hero > *', {
+        y: 26,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.1,
+        ease: 'power3.out',
+        delay: 0.15,
+      })
+      gsap.utils.toArray('[data-reveal-item]').forEach((el, i) => {
+        gsap.from(el, {
+          y: 40,
+          opacity: 0,
+          duration: 0.9,
+          delay: (i % 2) * 0.08,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%' },
+        })
+      })
+    }
+  </script>
+</Base>
+
+<style>
+  .projects-canvas {
+    opacity: 0.45;
+  }
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem var(--gutter);
+    background: linear-gradient(to bottom, rgba(23, 20, 26, 0.9), transparent);
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    color: var(--bone);
+  }
+  .spark {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, var(--whitehot), var(--ember));
+    box-shadow: 0 0 12px rgba(255, 92, 46, 0.8);
+  }
+  .site-nav nav {
+    display: flex;
+    gap: 1.8rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .site-nav nav a {
+    color: var(--ash);
+  }
+  .site-nav nav a:hover {
+    color: var(--whitehot);
+  }
+  .nav-cta {
+    color: var(--amber) !important;
+  }
+
+  .projects {
+    padding-top: clamp(8rem, 16vh, 11rem);
+    padding-bottom: 6rem;
+  }
+  .projects-hero h1 {
+    font-size: clamp(2.8rem, 7.5vw, 5.5rem);
+    line-height: 1.02;
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.28em;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+  .projects-lede {
+    max-width: 38rem;
+    margin-top: 1.6rem;
+    font-size: var(--text-md);
+    font-weight: 340;
+    line-height: 1.6;
+    color: var(--ash);
+  }
+
+  .project-grid {
+    margin-top: 4.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 3.5vw, 3rem);
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    border-radius: 14px;
+  }
+
+  .card-cover {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--slag-edge);
+    background:
+      radial-gradient(120% 100% at 30% 0%, #2a222c 0%, transparent 60%),
+      var(--slag);
+    transition:
+      border-color var(--dur-std) var(--ease-forge),
+      box-shadow var(--dur-std) var(--ease-forge);
+  }
+  .shot-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: transform var(--dur-slow) var(--ease-out-soft);
+  }
+  .cover-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon-img {
+    width: 34%;
+    height: auto;
+    border-radius: 22%;
+    box-shadow:
+      0 18px 50px rgba(0, 0, 0, 0.55),
+      0 0 60px rgba(255, 92, 46, 0.12);
+    transition: transform var(--dur-slow) var(--ease-out-soft);
+  }
+  /* ember glow floor inside icon covers */
+  .cover-icon::after {
+    content: '';
+    position: absolute;
+    inset: auto -10% -35% -10%;
+    height: 60%;
+    background: radial-gradient(50% 100% at 50% 100%, rgba(255, 92, 46, 0.22), transparent 70%);
+    pointer-events: none;
+  }
+
+  .project-card:hover .card-cover,
+  .project-card:focus-visible .card-cover {
+    border-color: rgba(255, 180, 84, 0.45);
+    box-shadow: 0 0 44px rgba(255, 92, 46, 0.16);
+  }
+  .project-card:hover .shot-img {
+    transform: scale(1.035);
+  }
+  .project-card:hover .icon-img {
+    transform: translateY(-4px) scale(1.05);
+  }
+
+  .card-meta {
+    margin-top: 1.3rem;
+  }
+  .card-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.45rem;
+  }
+  .card-name {
+    font-family: var(--font-display);
+    font-variation-settings: 'opsz' 60, 'SOFT' 50, 'WONK' 0;
+    font-weight: 580;
+    font-size: var(--text-lg);
+    line-height: 1.15;
+    transition: color var(--dur-quick) var(--ease-forge);
+  }
+  .project-card:hover .card-name {
+    color: var(--amber);
+  }
+  .card-arrow {
+    font-family: var(--font-mono);
+    color: var(--amber);
+    opacity: 0;
+    transform: translate(-6px, 6px);
+    transition:
+      opacity var(--dur-quick) var(--ease-forge),
+      transform var(--dur-std) var(--ease-out-soft);
+  }
+  .project-card:hover .card-arrow,
+  .project-card:focus-visible .card-arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  .card-blurb {
+    margin-top: 0.65rem;
+    max-width: 34rem;
+    color: var(--ash);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  .projects-cta {
+    margin-top: 5.5rem;
+  }
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.95rem 1.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--slag-edge);
+    color: var(--bone);
+    transition:
+      border-color var(--dur-quick) var(--ease-forge),
+      color var(--dur-quick) var(--ease-forge);
+  }
+  .back-link:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  @media (max-width: 760px) {
+    .project-grid {
+      grid-template-columns: 1fr;
+      gap: 2.6rem;
+    }
+  }
+</style>
