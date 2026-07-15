@@ -1,0 +1,422 @@
+---
+import Base from "../layouts/Base.astro";
+
+const links = [
+  {
+    label: "Nugget AI",
+    desc: "Customer interviews → product roadmap, in seconds",
+    kind: "Web app",
+    href: "https://nggt.ai/",
+  },
+  {
+    label: "20 Problems",
+    desc: "A daily math sprint — twenty formulas, thirty seconds",
+    kind: "Web app",
+    href: "https://www.20problems.com/",
+  },
+  {
+    label: "Halo — Selfie Ring Light",
+    desc: "Your screen becomes the ring light",
+    kind: "iOS app",
+    href: "https://apps.apple.com/us/app/halo-selfie-ring-light/id6758818168",
+    icon: "/projects/halo-icon.jpg",
+  },
+  {
+    label: "Part Identifier Plus",
+    desc: "Point, shoot, identified",
+    kind: "iOS app",
+    href: "https://apps.apple.com/us/app/part-identifier-plus/id6741009187",
+    icon: "/projects/partid-icon.jpg",
+  },
+  {
+    label: "All projects",
+    desc: "The full workshop",
+    kind: "Portfolio",
+    href: "/projects",
+  },
+  {
+    label: "Main site",
+    desc: "Work, method, about",
+    kind: "Portfolio",
+    href: "/",
+  },
+];
+
+const socials = [
+  { label: "Instagram", href: "https://www.instagram.com/brodiehelms/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/brodiehelms/" },
+  { label: "GitHub", href: "https://github.com/HunterHelms" },
+  { label: "Substack", href: "https://pmbrodie.substack.com/" },
+  { label: "Medium", href: "https://medium.com/@brodiehelms" },
+];
+---
+
+<Base
+  title="Brodie Helms — Links"
+  description="Quick links to Brodie Helms's projects — Nugget AI, 20 Problems, Halo, Part Identifier Plus — plus contact info."
+>
+  <canvas id="forge-canvas" class="links-canvas" aria-hidden="true"></canvas>
+
+  <main class="links">
+    <div class="links-wrap">
+      <header class="profile" data-reveal-group>
+        <span class="avatar" data-reveal-item aria-hidden="true">BH</span>
+        <p class="mono-label" data-reveal-item>@brodiehelms</p>
+        <h1 class="display" data-reveal-item>Brodie Helms</h1>
+        <p class="tagline" data-reveal-item>
+          Product manager &amp; founder, building in Fairhope, AL.
+        </p>
+      </header>
+
+      <section class="link-stack" aria-label="Projects" data-reveal-group>
+        {
+          links.map((l) => (
+            <a
+              class="link-card"
+              href={l.href}
+              target={l.href.startsWith("/") ? undefined : "_blank"}
+              rel={l.href.startsWith("/") ? undefined : "noreferrer"}
+              data-reveal-item
+            >
+              {l.icon ? (
+                <img
+                  class="link-icon"
+                  src={l.icon}
+                  alt=""
+                  width="88"
+                  height="88"
+                  loading="lazy"
+                />
+              ) : (
+                <span class="link-icon link-icon-mono" aria-hidden="true">
+                  {l.label.charAt(0)}
+                </span>
+              )}
+              <span class="link-text">
+                <span class="link-kind mono-label">{l.kind}</span>
+                <span class="link-label">{l.label}</span>
+                <span class="link-desc">{l.desc}</span>
+              </span>
+              <span class="link-arrow" aria-hidden="true">
+                ↗
+              </span>
+            </a>
+          ))
+        }
+      </section>
+
+      <section class="contact-block" data-reveal-group>
+        <p class="mono-label" data-reveal-item>Get in touch</p>
+        <div class="contact-actions" data-reveal-item>
+          <a class="btn-forge" href="mailto:bhelms@redmontdigital.com"
+            >Email me</a
+          >
+          <a
+            class="btn-quiet"
+            href="https://calendar.app.google/1RgGcSPRMjPVzF4Y9"
+            target="_blank"
+            rel="noreferrer">Book 30 minutes</a
+          >
+        </div>
+      </section>
+
+      <ul class="social-row" aria-label="Social">
+        {
+          socials.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noreferrer">
+                {s.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <footer class="links-footer">
+        <p>© 2026 Hunter Brodie Helms</p>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    import gsap from "gsap";
+    import { initForge } from "../scripts/forge.js";
+
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    const canvas = document.getElementById("forge-canvas");
+    if (canvas) {
+      const forge = initForge(canvas, { reducedMotion: reduced });
+      if (forge) forge.setProgress(3);
+    }
+
+    if (!reduced) {
+      gsap.utils.toArray("[data-reveal-group]").forEach((group, gi) => {
+        gsap.from(group.querySelectorAll("[data-reveal-item]"), {
+          y: 22,
+          opacity: 0,
+          duration: 0.75,
+          stagger: 0.06,
+          ease: "power3.out",
+          delay: 0.1 + gi * 0.08,
+        });
+      });
+    }
+  </script>
+</Base>
+
+<style>
+  .links-canvas {
+    opacity: 0.35;
+  }
+
+  .links {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-block: clamp(3.5rem, 8vh, 6rem);
+    display: flex;
+    justify-content: center;
+  }
+  .links-wrap {
+    width: 100%;
+    max-width: 30rem;
+    padding-inline: var(--gutter);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ————— profile ————— */
+  .profile {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.6rem;
+    height: 4.6rem;
+    border-radius: 50%;
+    font-family: var(--font-display);
+    font-variation-settings:
+      "opsz" 40,
+      "SOFT" 40,
+      "WONK" 0;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--iron-deep);
+    background: linear-gradient(135deg, var(--amber), var(--ember));
+    box-shadow: 0 0 40px rgba(255, 92, 46, 0.35);
+  }
+  .profile .mono-label {
+    margin-top: 1rem;
+  }
+  .profile h1 {
+    margin-top: 0.4rem;
+    font-size: clamp(1.9rem, 6vw, 2.6rem);
+  }
+  .tagline {
+    margin-top: 0.6rem;
+    max-width: 24rem;
+    color: var(--ash);
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+
+  /* ————— link stack ————— */
+  .link-stack {
+    margin-top: 2.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .link-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 16px;
+    border: 1px solid var(--slag-edge);
+    background: var(--slag);
+    color: inherit;
+    overflow: hidden;
+    transition:
+      border-color var(--dur-quick) var(--ease-forge),
+      transform var(--dur-quick) var(--ease-out-soft),
+      box-shadow var(--dur-std) var(--ease-forge);
+  }
+  .link-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(255, 92, 46, 0.1), transparent 60%);
+    opacity: 0;
+    transition: opacity var(--dur-std) var(--ease-forge);
+    pointer-events: none;
+  }
+  .link-card:hover,
+  .link-card:focus-visible {
+    border-color: rgba(255, 180, 84, 0.45);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  .link-card:hover::before,
+  .link-card:focus-visible::before {
+    opacity: 1;
+  }
+  .link-card:active {
+    transform: translateY(0);
+  }
+
+  .link-icon {
+    flex: none;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+  .link-icon-mono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--slag), #2c2530);
+    border: 1px solid var(--slag-edge);
+    font-family: var(--font-display);
+    font-variation-settings:
+      "opsz" 40,
+      "SOFT" 40,
+      "WONK" 0;
+    font-weight: 600;
+    font-size: var(--text-lg);
+    color: var(--amber);
+  }
+
+  .link-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+    flex: 1;
+  }
+  .link-kind {
+    color: var(--ember);
+    letter-spacing: 0.14em;
+  }
+  .link-label {
+    font-family: var(--font-display);
+    font-variation-settings:
+      "opsz" 50,
+      "SOFT" 50,
+      "WONK" 0;
+    font-weight: 560;
+    font-size: var(--text-base);
+    line-height: 1.25;
+  }
+  .link-desc {
+    color: var(--ash);
+    font-size: var(--text-sm);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .link-arrow {
+    flex: none;
+    font-family: var(--font-mono);
+    color: var(--amber);
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition:
+      opacity var(--dur-quick) var(--ease-forge),
+      transform var(--dur-std) var(--ease-out-soft);
+  }
+  .link-card:hover .link-arrow,
+  .link-card:focus-visible .link-arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  /* ————— contact ————— */
+  .contact-block {
+    margin-top: 3rem;
+    text-align: center;
+  }
+  .contact-actions {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .btn-forge,
+  .btn-quiet {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.95rem 1.9rem;
+    border-radius: 999px;
+    text-align: center;
+    transition:
+      transform var(--dur-quick) var(--ease-out-soft),
+      box-shadow var(--dur-std) var(--ease-forge);
+  }
+  .btn-forge {
+    background: linear-gradient(110deg, var(--ember), var(--amber));
+    color: var(--iron-deep);
+    font-weight: 600;
+    box-shadow: 0 0 28px rgba(255, 92, 46, 0.3);
+  }
+  .btn-forge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 44px rgba(255, 92, 46, 0.5);
+    color: var(--iron-deep);
+  }
+  .btn-quiet {
+    border: 1px solid var(--slag-edge);
+    color: var(--bone);
+  }
+  .btn-quiet:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  /* ————— socials ————— */
+  .social-row {
+    margin-top: 2.6rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .social-row a {
+    color: var(--ash);
+  }
+  .social-row a:hover {
+    color: var(--whitehot);
+  }
+
+  /* ————— footer ————— */
+  .links-footer {
+    margin-top: 3rem;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ash);
+  }
+
+  @media (max-width: 420px) {
+    .link-desc {
+      display: none;
+    }
+  }
+</style>
