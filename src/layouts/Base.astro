@@ -30,6 +30,13 @@ const { title, description } = Astro.props
     <meta name="theme-color" content="#17141a" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1VGMBJY9K2"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1VGMBJY9K2');
+    </script>
   </head>
   <body>
     <div class="atmosphere" aria-hidden="true"></div>
